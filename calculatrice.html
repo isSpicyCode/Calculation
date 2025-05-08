@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculatrice Simple</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+  <div class="bg-gray-500 p-6 rounded-lg shadow-lg w-72">
+    <h1 class="text-2xl text-center text-gray-400 font-bold mb-4">Calculatrice</h1>
+    
+    <!-- Afficheur -->
+    <div id="display" class="bg-gray-400 text-right p-3 rounded text-4xl font-[800] font-mono mb-4 text-gray-900">0</div>
+
+    <!-- Chiffres -->
+    <div class="grid grid-cols-4 gap-2 mb-2 text-zinc-800">
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">7</button>
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">8</button>
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">9</button>
+      <button class="btn-op bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">/</button>
+
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">4</button>
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">5</button>
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">6</button>
+      <button class="btn-op bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">*</button>
+
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">1</button>
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">2</button>
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">3</button>
+      <button class="btn-op bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">-</button>
+
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">0</button>
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">C</button>
+      <button class="btn bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">=</button>
+      <button class="btn-op bg-gray-400 rounded p-2 hover:bg-gray-600 hover:text-zinc-100">+</button>
+    </div>
+  </div>
+
+  <script>
+    const btn = document.querySelectorAll(".btn")
+    const operation = document.querySelectorAll(".btn-op")
+    const display = document.querySelector("#display")
+
+
+    btn.forEach(button => {
+        button.addEventListener('click', handleNumber)
+    })
+
+    operation.forEach(button => {
+        button.addEventListener('click', handleOperation)
+    })
+
+    let currentInput = "";
+
+    function handleOperation(e){
+        e.preventDefault();
+        currentInput += e.target.textContent;
+        display.textContent = currentInput
+    }
+
+    function handleNumber(e){
+        e.preventDefault();
+        
+        if(e.target.textContent === "C"){
+            currentInput = "";
+            display.textContent = "0";
+        }  else if (e.target.textContent === "="){
+            try {
+                let resultat = eval(currentInput)
+                display.textContent = resultat;
+            }
+            catch (error){
+                display.textContent = "Error";
+                currentInput = "";
+            }
+        } else {
+            currentInput += e.target.textContent;
+            display.textContent = currentInput
+        }
+    }
+
+
+
+  </script>
+
+  <style>
+    .btn {
+      @apply bg-amber-400 text-gray-900 rounded text-xl p-2 font-semibold hover:bg-amber-300;
+    }
+    .btn-op {
+      @apply bg-amber-600 text-white rounded text-xl p-2 font-semibold hover:bg-amber-500;
+    }
+  </style>
+
+</body>
+</html>
